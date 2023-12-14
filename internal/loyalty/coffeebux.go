@@ -2,13 +2,13 @@ package loyalty
 
 import (
 	"context"
-	"errors"
 	"fmt"
 
 	coffeeco "coffeeco/internal"
 	"coffeeco/internal/store"
 
 	"github.com/google/uuid"
+	"github.com/pkg/errors"
 )
 
 type CoffeeBux struct {

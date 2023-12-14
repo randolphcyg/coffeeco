@@ -2,7 +2,6 @@ package purchase
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"time"
 
@@ -13,6 +12,7 @@ import (
 
 	"github.com/Rhymond/go-money"
 	"github.com/google/uuid"
+	"github.com/pkg/errors"
 )
 
 type Purchase struct {

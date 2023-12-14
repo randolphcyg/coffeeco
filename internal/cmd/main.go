@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"log"
+	"log/slog"
 
 	"github.com/Rhymond/go-money"
 	"github.com/google/uuid"
@@ -23,24 +23,24 @@ func main() {
 	// 初始化支付服务
 	csvc, err := payment.NewPayService(mamaTestAPIKey)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	mongoConString := "mongodb://admin:adqwe123@localhost:27017"
 	prepo, err := purchase.NewMongoRepo(ctx, mongoConString)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 	if err := prepo.Ping(ctx); err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	sRepo, err := store.NewMongoRepo(ctx, mongoConString)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 	if err := sRepo.Ping(ctx); err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	sSvc := store.NewService(sRepo)
@@ -56,13 +56,13 @@ func main() {
 		},
 		ProductsToPurchase: []coffeeco.Product{{
 			ItemName:  "item1",
-			BasePrice: *money.New(3300, "USD"),
+			BasePrice: *money.New(250, "USD"),
 		}},
 		PaymentMeans: payment.MEANS_CARD,
 	}
 	if err := svc.CompletePurchase(ctx, someStoreID, pur, nil); err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
-	log.Println("purchase was successful")
+	slog.Info("purchase was successful")
 }

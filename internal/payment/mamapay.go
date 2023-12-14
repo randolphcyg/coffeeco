@@ -2,10 +2,10 @@ package payment
 
 import (
 	"context"
-	"errors"
 	"fmt"
 
 	"github.com/Rhymond/go-money"
+	"github.com/pkg/errors"
 )
 
 type MamaPayApi struct {

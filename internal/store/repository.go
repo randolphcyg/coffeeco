@@ -2,10 +2,10 @@ package store
 
 import (
 	"context"
-	"errors"
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/pkg/errors"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -46,7 +46,7 @@ func (m MongoRepository) GetStoreDiscount(ctx context.Context, storeID uuid.UUID
 
 	var discount int64
 	if err := m.storeDiscounts.FindOne(ctx, bson.D{{"store_id", storeID.String()}}).Decode(&discount); err != nil {
-		if err == mongo.ErrNoDocuments {
+		if errors.Is(err, mongo.ErrNoDocuments) {
 			// This error means your query did not match any documents.
 			return 0, ErrNoDiscount
 		}
